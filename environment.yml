@@ -1,0 +1,21 @@
+name: 532_group17
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - pip
+  - pandas
+  - numpy
+  - altair-all
+  - matplotlib
+  - seaborn
+  - plotly
+  - ipykernel
+  - dash=2.0.0 
+  - jupyterlab
+  - dash-bootstrap-components 
+  - scikit-learn
+  - pip:
+      - jupyter-dash
+      - dash-vega-components
