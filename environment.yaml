@@ -3,16 +3,16 @@ channels:
     - conda-forge
     - defaults
 dependencies:
+    - python=3.9
+    - scikit-learn
     - ipykernel
     - altair-all
+    - pandas
+    - matplotlib
+    - numpy
     - dash
     - dash-bootstrap-components
     - plotly
-    - r-tidyverse
-    - r-base
-    - r-shiny
-    - r-plotly
-    - r-languageserver
     - pip
 pip:
     - dash-vega-components
