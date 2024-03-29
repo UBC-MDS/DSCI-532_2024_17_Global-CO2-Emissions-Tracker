@@ -1,16 +1,8 @@
 ## 1. Motivation and purpose
 
-### Our role: 
-A team of UNEP (UN Environment Programme) officers and Intergovernmental Panel on Climate Change (IPCC) officers who want to raise awareness about CO2 emissions.
+As UNEP and IPCC officers, our mission is to educate the public about the escalating CO2 emissions that are fueling climate change, contaminating our air and oceans, triggering health issues, and inducing socioeconomic disruptions. Understanding the gravity of this crisis is crucial for safeguarding our environment, preserving public health, and securing a sustainable legacy. To empower people in confronting this challenge, we've developed the Global CO2 Emissions Tracker—a sophisticated dashboard that offers a comprehensive view of CO2 emissions through detailed time-series data, pinpointing sources and trends.
 
-### Target audience: 
-The general public with an interest in the environment.
-
-### The problem the target audience is facing and how important it is:
-The target audience faces the problem of increasing CO2 emissions, leading to climate change, air pollution, ocean pollution, health problem issues and lastly social-economic impacts. It's crucial to solve this issue to protect the environment, human health, and ensure a sustainable future for all.
-
-### How our dashboard assist in solving this problem:
-Our Global CO2 Emissions Tracker can give our target audience overview by providing time-series information on global CO2 emissions, sources and trends. This dashboard will help individuals to understand and feel the magnitude of this problem. They can track progress and be informed and can use it to assist on making decisions about personal and collective actions to reduce emissions. The CO2 data dashboard helps people understand CO2 emissions better by showing information in an easy-to-understand way. This makes people more aware of the problem, encourages them to take responsibility, and gets them involved in finding solutions to reduce CO2 emissions.
+ This dashboard will help individuals to understand about the profound impact of CO2 emissions but also to evoke a tangible sense of the issue's urgency. They can track progress and be informed and can use it to assist on making decisions about personal and collective actions to reduce emissions. By transforming complex emissions data into a user-friendly visual narrative, the dashboard cultivates a deeper understanding and appreciation of the challenge at hand, inspiring active engagement and spurring on a united front to champion the cause of emissions reduction.
 
 
 ## 2. Description of the data
@@ -35,7 +27,7 @@ Top10 country in carbon emission:
 These engineered variables will enrich our analysis, enabling us to create more insightful and impactful visualizations. By examining the distribution, trends, and outliers in carbon emissions, we aim to provide valuable insights that can help our target audience in their efforts to address climate change.
 
 ## 3. Research questions
-Mary is a warm-hearted Vancouverite deeply invested in her community. On her way to work today, she learned about Vancouver's ambitious plan to achieve 'net zero' emissions by xxxx, a concept new to her. After a brief research, she became more interested in the topic and was eager to understand the broader context, to uncover the current status of global emissions. She wondered: How close are we to achieving 'net zero' globally? Are the world's largest emitters on track to meet these goals? What is the overall emissions landscape?
+Mary is a warm-hearted Vancouverite deeply invested in her community. On her way to work today, she learned about Vancouver's ambitious plan to achieve 'net zero' emissions by 2050, a concept new to her. After a brief research, she became more interested in the topic and was eager to understand the broader context, to uncover the current status of global emissions. She wondered: How close are we to achieving 'net zero' globally? Are the world's largest emitters on track to meet these goals? What is the overall emissions landscape?
 
 With these questions in mind, Mary accesses the 'Global CO2 Emissions Tracker.' Upon logging in, she will be greeted by a global map highlighting countries with higher emissions in darker shades. Adjacent to the map, a pie chart will offer a detailed breakdown of each country's contribution to global emissions. The interface will include several controls, allowing her to filter data by year, region, or specific countries of interest. A line chart will display the emission trends of selected countries, complemented by a histogram showcasing the top emitters in her chosen region.
 
