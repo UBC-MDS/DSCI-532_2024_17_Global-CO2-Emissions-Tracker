@@ -1,82 +1,66 @@
-# Contributing
+# Contributing to Global CO2 Emissions Tracker Dashboard
 
-Contributions are welcome, and they are greatly appreciated! Every little bit
-helps, and credit will always be given.
+Thank you for considering contributing to the Global CO2 Emissions Tracker Dashboard project! 
+Contributions are welcome, and they are greatly appreciated! Every little bit helps, 
+and credit will always be given.
 
-## Contributions from Internal Contributors
-
-### Inclusive Task Allocation
-
-- Each team member is assigned on a fair based assessment of each member's capabilities by ensuring an equal distribution of workload to all members
-- Assigned tasks are mostly developing core functions, writing tests, updating documentation, and handling maintenance work, encouraging diversity in contributions and inclusion in the overall work process.
-
-### Github Project Board
-
-- Our Team's project management is mainly on github project board for assigning tasks, progress tracking.
-- Each team member takes a role as Project Manager for a week and manages the board. The Project manager is tasked with reviewing the progress of tasks and support them as required.
-
-### Milestone Management
-
-- A weekly milestone needs to be created and tag all the relevant issues to that Milestone.
-- Each team member is responsible for completing their assigned issues in the Milestone before the deadline but not after the deadline.
-
-### Peer Review
-
-- Regular code reviews and team meetings are conducted to maintain consistency in work.
-- Code reviewers must ensure that the code follows all the best practices and standards.Also ensure that everything is well-documented and tested.
+This document outlines some guidelines for contributing to this project. By participating, 
+you agree to abide by these guidelines to foster a welcoming and collaborative community.
 
 
-## Contributions from External Contributors
+## How to Contribute
 
-### Report Bugs
+There are several ways you can contribute to the project:
 
-If you are reporting a bug, please include:
-
-* Your operating system name and version.
-* Any details about your local setup that might be helpful in troubleshooting.
-* Detailed steps to reproduce the bug.
-
-### Fix Bugs
+### 1. **Reporting Bugs**: 
 
 Look through the GitHub issues for bugs. Anything tagged with "bug" and "help
 wanted" is open to whoever wants to implement it.
 
-### Implement Features
+If you encounter a new bug or unexpected behavior, please report it by opening an issue 
+in the GitHub issue tracker, please include:
+* Your operating system name and version.
+* Any details about your local setup that might be helpful in troubleshooting.
+* Detailed steps to reproduce the bug.
+
+### 2. **Feature Requests**: 
 
 Look through the GitHub issues for features. Anything tagged with "enhancement"
 and "help wanted" is open to whoever wants to implement it.
 
-### Write Documentation
+If you have ideas for new features or improvements, feel free to suggest them 
+by opening an issue in the GitHub issue tracker.
 
-You can never have enough documentation! Please feel free to contribute to any
-part of the documentation, such as the official docs, docstrings, or even
-on the web in blog posts, articles, and such.
+### 3. **Code Contributions**: 
 
-### Submit Feedback
+If you're interested in contributing code, please fork the repository, 
+make your changes, and submit a pull request.
 
 If you are proposing a feature:
-
 * Explain in detail how it would work.
 * Keep the scope as narrow as possible, to make it easier to implement.
 * Remember that this is a volunteer-driven project, and that contributions
   are welcome :)
 
-## Get Started!
-Coming soon!!
 
 ## Pull Request Guidelines
 
 Before you submit a pull request, check that it meets these guidelines:
 
-1. The pull request should include additional tests or trials on dashboard if appropriate.
-2. If the pull request adds functionality or graph, the docs should be updated.
-3. The pull request should work for all currently supported operating systems and versions of Python.
+1. The pull request should include additional necessary tests or trials on the dashboard if appropriate.
+2. If the pull request adds new functionality or a new chart, ensure that the documentation is updated 
+accordingly to reflect these changes.
+3. The pull request should work for all currently supported operating systems, supported browser, 
+versions of Python and devices where the dashboard is intended to be viewed.
+
 
 ## Code of Conduct
 
-Please note that the `mds_array_manipulationDSCI-532_2024_17_carbon-emissions` project is released with a
-Code of Conduct. By contributing to this project you agree to abide by its terms.
+Please note that the `DSCI-532_2024_17_Global-CO2-Emissions-Tracker` project is released with a
+[Code of Conduct](https://github.com/UBC-MDS/DSCI-532_2024_17_Global-CO2-Emissions-Tracker/blob/main/CODE_OF_CONDUCT.md). 
+By contributing to this project you agree to abide by its terms.
+
 
 ## Attribution
 
-This `CONTRIBUTING.md` file is adapted from and contains content from the equivalent file generated by [cookiecutter](https://cookiecutter.readthedocs.io/en/latest/).
+This `CONTRIBUTING.md` file is adapted from and contains content from the equivalent file generated by [cookiecutter](https://cookiecutter.readthedocs.io/en/latest/) and [Open Source Guide](https://opensource.guide/how-to-contribute/).
