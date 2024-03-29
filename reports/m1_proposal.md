@@ -1,6 +1,25 @@
 ## 1. Motivation and purpose
 
 ## 2. Description of the data
+In our proposal, we will leverage a robust dataset focusing on carbon dioxide (CO2) emissions data from various countries and regions. Our dataset contains 239 rows and, after omitting the "Indicator Name" and "Indicator Code" columns, we will utilize 33 columns which consist of the 'Country Name', 'Country Code', and annual CO2 emissions data spanning from 1990 to 2020.
+
+This data will be helpful to achieve our goal of creating an interactive dashboard to visualize CO2 emissions worldwide. By interacting with this dataset, our target audience, such as environmental policymakers, researchers, and educators, will be able to recognize patterns, trends, and outliers in emissions. Hopefully this can help them making decisions and strategies to mitigate climate change.
+
+To enhance the utility of our visualizations, we will engineer new variables that include:
+
+**Continent:** Assigning countries to their respective continents for regional analysis.
+**Average Emissions:** Calculating the average emissions per year for all countries to identify global trends.
+**Standard Deviation:** Providing insights into the year-by-year variability of emissions among countries.
+**Maximum and Minimum Emissions:** Highlighting the highest and lowest CO2 emitting countries annually to pinpoint specific areas for policy intervention.
+**Total Emission:** Summing up the emissions over a selected time period to understand the cumulative impact and guide long-term environmental planning.
+
+Mean carbon emission trend plot:
+<img src="../img/global_mean_emissions.png">
+
+Top10 country in carbon emission:
+<img src="../img/top_emitters_bar.png">
+
+These engineered variables will enrich our analysis, enabling us to create more insightful and impactful visualizations. By examining the distribution, trends, and outliers in carbon emissions, we aim to provide valuable insights that can help our target audience in their efforts to address climate change.
 
 ## 3. Research questions
 
