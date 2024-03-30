@@ -21,9 +21,13 @@ This data will be helpful to achieve our goal of creating an interactive dashboa
 To enhance the utility of our visualizations, we will engineer new variables that include:
 
 **Continent:** Assigning countries to their respective continents for regional analysis.
+
 **Average Emissions:** Calculating the average emissions per year for all countries to identify global trends.
+
 **Standard Deviation:** Providing insights into the year-by-year variability of emissions among countries.
+
 **Maximum and Minimum Emissions:** Highlighting the highest and lowest CO2 emitting countries annually to pinpoint specific areas for policy intervention.
+
 **Total Emission:** Summing up the emissions over a selected time period to understand the cumulative impact and guide long-term environmental planning.
 
 Mean carbon emission trend plot:
