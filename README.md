@@ -19,9 +19,6 @@ The Global CO2 Emissions Tracker dashboard has created by
 ## Contributing:
 Check out our [`CONTRIBUTING`](https://github.com/UBC-MDS/DSCI-532_2024_17_Global-CO2-Emissions-Tracker/blob/main/CONTRIBUTING.md) guidelines. It's important to note that this project operates under a Code of Conduct. By contributing to this project, you are acknowledging your agreement to comply with its terms.
 
-## License: 
-The Global CO2 Emissions Tracker dashboard is licensed under the terms of the MIT license and Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0) License.
-
 ## License
 `Global-CO2-Emissions-Tracker` is licensed under the terms of the MIT license for software code part including source code examples in the documentation and it is licensed under the terms of the Attribution-NonCommercial 4.0 International (CC BY-NC 4.0), for Parts Other than the Software Code (Package Documentation, Data, Text, and any Media). See [`LICENSE`](https://github.com/UBC-MDS/DSCI-532_2024_17_Global-CO2-Emissions-Tracker/blob/main/LICENSE).
 
