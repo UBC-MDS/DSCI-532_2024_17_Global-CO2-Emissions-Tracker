@@ -39,6 +39,7 @@ melted_df['Year'] = melted_df['Year'].astype(int)  # Convert 'Year' to integer f
 
 ### app layout
 app = dash.Dash(__name__)
+server = app.server
 app.layout = html.Div([
     html.H1("CO2 Emissions Dashboard"),
     
@@ -83,4 +84,4 @@ def update_graph(selected_countries):
 ## Map Chart
 
 if __name__ == '__main__':
-    app.run_server(debug=True, host='127.0.0.1', port=8050)
+    app.run_server(debug=False)
