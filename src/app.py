@@ -4,7 +4,7 @@ import plotly.express as px
 import pandas as pd
 
 # Load the dataset and Preprocessing
-carbon_df = pd.read_csv('../data/raw/carbon_emission_raw.csv')
+carbon_df = pd.read_csv('/data/raw/carbon_emission_raw.csv')
 carbon_df = carbon_df.drop(['Indicator Name', 'Indicator Code'], axis=1)
 non_country_names = [
     'Africa Eastern and Southern', 'Africa Western and Central', 'Arab World', 'Bahamas, The',
