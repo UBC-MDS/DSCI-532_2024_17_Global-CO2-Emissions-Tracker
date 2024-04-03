@@ -8,7 +8,7 @@ carbon_df = pd.read_csv('../data/proceed/carbon_emission_proceed.csv')
 #### CHANGE IT WHEN DEPLOYMENT
 # carbon_df = pd.read_csv('data/proceed/carbon_emission_raw.csv')
 
-melted_df = carbon_df.melt(id_vars=["Country Name", "Region"], var_name="Year", value_name="Emissions")
+melted_df = carbon_df.drop(columns=['Country Code']).melt(id_vars=["Country Name", "Region"], var_name="Year", value_name="Emissions")
 melted_df['Year'] = melted_df['Year'].astype(int)  # Ensure 'Year' is an integer for plotting
 
 
@@ -26,13 +26,6 @@ app.layout = html.Div([
         options=[{'label': i, 'value': i} for i in melted_df['Country Name'].unique()],
         multi=True,  # Enable multiple selection
         value=['United States']  # Default value
-    ),
-    
-    dcc.Dropdown(
-        id='region-dropdown',
-        options=[{'label': i, 'value': i} for i in melted_df['Region'].unique()],
-        multi=True,
-        placeholder="Select Region(s)"
     ),
     
     dcc.RangeSlider(
