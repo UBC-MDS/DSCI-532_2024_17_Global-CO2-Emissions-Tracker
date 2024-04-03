@@ -28,6 +28,13 @@ app.layout = html.Div([
         value=['United States']  # Default value
     ),
     
+    dcc.Dropdown(
+        id='region-dropdown',
+        options=[{'label': i, 'value': i} for i in melted_df['Region'].unique()],
+        multi=True,
+        placeholder="Select Region(s)"
+    ),
+    
     dcc.RangeSlider(
         id='year-slider',
         min=melted_df['Year'].min(),
