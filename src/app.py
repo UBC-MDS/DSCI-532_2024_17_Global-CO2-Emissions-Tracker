@@ -45,7 +45,9 @@ app.layout = html.Div([
         allowCross=False
     ),
     
-    dcc.Graph(id='emissions-time-series')
+    dcc.Graph(id='emissions-time-series'),
+
+    dcc.Graph(id='emissions-bar-chart')
 ])
 
 
@@ -70,14 +72,28 @@ def update_graph(selected_countries, selected_years):
     return fig
 
 
-## Bar Chart @ Jo
-# @app.callback(
-#     Output(, ),
-#     [Input(, )]
-# )
+## Bar Chart @ Jing
+@app.callback(
+    Output('emissions-bar-chart', 'figure'),
+    [Input('region-dropdown', 'value')]
+)
+
+def update_bar_chart(selected_regions):
+    if not selected_regions:
+        return px.bar(title='Select a region to see the Top 5 Countries\' CO2 Emissions')
+
+    df_filtered_by_region = melted_df[melted_df['Region'].isin(selected_regions)]
+    df_top_countries = df_filtered_by_region.groupby('Country Name').agg({'Emissions':'sum'}).nlargest(5, 'Emissions').reset_index()
+
+    fig = px.bar(df_top_countries, x='Country Name', y='Emissions', text='Emissions',
+                 title='Top 5 Countries\' Total CO2 Emissions in Selected Region(s)')
+
+    fig.update_traces(texttemplate='%{text:.2s}', textposition='outside')
+
+    return fig
 
 
-## Pie Chart @ Jing
+## Pie Chart @ J0
 # @app.callback(
 #     Output(, ),
 #     [Input(, )]
