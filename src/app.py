@@ -20,6 +20,7 @@ app = dash.Dash(__name__)
 ## @ Hanchen  Change the Layout
 app.layout = html.Div([
     html.H1("CO2 Emissions Dashboard"),
+
     
     dcc.Dropdown(
         id='country-dropdown',
@@ -44,9 +45,9 @@ app.layout = html.Div([
         step=1,
         allowCross=False
     ),
-    
-    dcc.Graph(id='emissions-time-series'),
 
+    dcc.Graph(id='emissions-map-chart'),
+    dcc.Graph(id='emissions-time-series'),
     dcc.Graph(id='emissions-bar-chart')
 ])
 
@@ -93,17 +94,61 @@ def update_bar_chart(selected_regions):
     return fig
 
 
-## Pie Chart @ J0
+## Pie Chart @ Jo
 # @app.callback(
 #     Output(, ),
 #     [Input(, )]
 # )
 
 ## Map Chart @ Yili
-# @app.callback(
-#     Output(, ),
-#     [Input(, )]
-# )
+@app.callback(
+    Output('emissions-map-chart', 'figure'),
+    [Input('country-dropdown', 'value'), Input('year-slider', 'value')]
+)
+def update_map(selected_countries, selected_years):
+    if not selected_countries or not selected_years:
+        # Return an empty map if no selection is made
+        return px.choropleth(title="Select countries and year range to see the map")
+
+    # Filter the dataset based on the selection
+    df_filtered = melted_df[
+        (melted_df['Country Name'].isin(selected_countries)) &
+        (melted_df['Year'] >= selected_years[0]) &
+        (melted_df['Year'] <= selected_years[1])
+    ]
+    
+    # Calculate summary statistics for each country
+    stats_by_country = df_filtered.groupby('Country Name').agg(
+        Total_Emissions=pd.NamedAgg(column='Emissions', aggfunc='sum'),
+        Average_Emissions=pd.NamedAgg(column='Emissions', aggfunc='mean'),
+        Std_Emissions=pd.NamedAgg(column='Emissions', aggfunc='std'), 
+        Max_Emissions=pd.NamedAgg(column='Emissions', aggfunc='max'),
+        Min_Emissions=pd.NamedAgg(column='Emissions', aggfunc='min')
+    ).reset_index()
+
+    # Create the choropleth map
+    fig = px.choropleth(
+        stats_by_country,
+        locations="Country Name",
+        locationmode="country names",
+        color="Total_Emissions",
+        hover_name="Country Name",
+        hover_data={
+            'Total_Emissions': True,
+            'Average_Emissions': ':.2f',
+            'Std_Emissions': ':.2f',
+            'Max_Emissions': ':.2f',
+            'Min_Emissions': ':.2f'
+        },
+        color_continuous_scale=px.colors.sequential.Plasma,
+        title="CO2 Emissions by Country"
+    )
+
+    fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+    fig.update_geos(projection_type="natural earth")
+
+    return fig
+
 
 if __name__ == '__main__':
     app.run_server(debug=True, host='127.0.0.1', port=8050)
