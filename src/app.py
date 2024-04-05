@@ -14,7 +14,7 @@ melted_df['Year'] = melted_df['Year'].astype(int)  # Ensure 'Year' is an integer
 
 
 ### app layout
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+# app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 #### USE IT WHEN DEPLOYMENT
 server = app.server
 
@@ -117,7 +117,7 @@ def update_graph(selected_countries, selected_years):
 
 def update_bar_chart(selected_regions):
     if not selected_regions:
-        return px.bar(title='Select a region to see the Top 5 Countries\' CO2 Emissions')
+        return px.bar(title='Choose any Region(s): <br>For CO2 Emissions Bar Chart')
 
     df_filtered_by_region = melted_df[melted_df['Region'].isin(selected_regions)]
     df_top_countries = df_filtered_by_region.groupby('Country Name').agg({'Emissions':'sum'}).nlargest(5, 'Emissions').reset_index()
@@ -137,25 +137,27 @@ def update_bar_chart(selected_regions):
 )
 def update_pie_chart(selected_regions):
     if not selected_regions:
-        return px.pie(title='Select a region to see the Top 5 Countries\' CO2 Emissions Pie Chart')
+        return px.pie(title='Choose any Region(s): <br>For CO2 Emissions Pie Chart')
 
     df_filtered_by_region = melted_df[melted_df['Region'].isin(selected_regions)]
     df_countries = df_filtered_by_region.groupby('Country Name', as_index=False).agg({'Emissions':'sum'})
     
     df_top_countries = df_countries.sort_values('Emissions', ascending=False).head(5)
-    other_emissions = df_countries.sort_values('Emissions', ascending=False)[5:]['Emissions'].sum()
-    other_row = pd.DataFrame(data={'Country Name': ['Other'], 'Emissions': [other_emissions]})
-    df_display = pd.concat([df_top_countries, other_row], ignore_index=True)
+    if len(df_countries) > 5: 
+        other_emissions = df_countries.sort_values('Emissions', ascending=False)[5:]['Emissions'].sum()
+        other_row = pd.DataFrame(data={'Country Name': ['Others'], 'Emissions': [other_emissions]})
+        df_display = pd.concat([df_top_countries, other_row], ignore_index=True)
+    else:
+        df_display = df_top_countries
     
     fig = px.pie(data_frame=df_display,
                  names='Country Name', 
                  values='Emissions',
-                 hover_data=['Country Name', 'Emissions'],
-                 hover_name='Country Name',
+                 hover_data={'Country Name': True, 'Emissions': ':.2f'}, 
                  hole=.2,
-                 title='Top 5 Countries and Others\' CO2 Emissions in Selected Region(s)')
-
-    fig.update_traces(hovertemplate='%{hover_name}: <br>CO2 Emission: %{value} <br>', textposition='outside')
+                 title='CO2 Emissions of the Selected Region(s): <br>Top 5 Countries and Others')
+    
+    fig.update_traces(hovertemplate='%{label}: <br>Percentage: %{percent} <br>CO2 Emission: %{value} MT/capita<br>', textposition='outside')
 
     return fig
 
