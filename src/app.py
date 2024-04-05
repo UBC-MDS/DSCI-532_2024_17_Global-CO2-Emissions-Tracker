@@ -49,6 +49,7 @@ app.layout = html.Div([
     dcc.Graph(id='emissions-map-chart'),
     dcc.Graph(id='emissions-time-series'),
     dcc.Graph(id='emissions-bar-chart')
+    dcc.Graph(id='emissions-pie-chart')
 ])
 
 
@@ -86,7 +87,7 @@ def update_bar_chart(selected_regions):
     df_filtered_by_region = melted_df[melted_df['Region'].isin(selected_regions)]
     df_top_countries = df_filtered_by_region.groupby('Country Name').agg({'Emissions':'sum'}).nlargest(5, 'Emissions').reset_index()
 
-    fig = px.bar(df_top_countries, x='Country Name', y='Emissions', text='Emissions',
+    fig = px.pie(df_top_countries, x='Country Name', y='Emissions', text='Emissions',
                  title='Top 5 Countries\' Total CO2 Emissions in Selected Region(s)')
 
     fig.update_traces(texttemplate='%{text:.2s}', textposition='outside')
@@ -94,11 +95,31 @@ def update_bar_chart(selected_regions):
     return fig
 
 
-## Pie Chart @ Jo
-# @app.callback(
-#     Output(, ),
-#     [Input(, )]
-# )
+# Pie Chart @ Jo
+@app.callback(
+    Output('emissions-pie-chart', 'figure'),
+    [Input('region-dropdown', 'value')]
+)
+
+def update_pie_chart(selected_regions):
+    if not selected_regions:
+        return px.pie(title='Select a region to see the Top 5 Countries\' CO2 Emissions Pie Chart')
+
+    df_filtered_by_region = melted_df[melted_df['Region'].isin(selected_regions)]
+    df_top_countries = df_filtered_by_region.groupby('Country Name').agg({'Emissions':'sum'}).nlargest(5, 'Emissions').reset_index()
+
+    fig = px.pie(data_frame=df_top_countries,
+                 names='Region', 
+                 values=selected_regions,
+                 labels='Country Name'
+                 hover_template='%{label}: <br>CO2 Emission: %{value} </br>'
+                 hole=.2,
+                 title='Top 5 Countries\' Top 5 CO2 Emissions in Selected Region(s)')
+
+    fig.update_traces(texttemplate='%{text:.2s}', textposition='outside')
+
+    return fig
+
 
 ## Map Chart @ Yili
 @app.callback(
