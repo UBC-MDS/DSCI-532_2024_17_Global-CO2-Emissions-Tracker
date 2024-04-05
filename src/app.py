@@ -19,14 +19,13 @@ app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 server = app.server
 
 ## @ Hanchen  Change the Layout
-
 app.layout=dbc.Container([
     dbc.Row([
-        dbc.Col([
-            html.H1('Global CO2 Emission Tracker: Visualizing Carbon Footprints Worldwide'),
-            html.Br(),
-        ]),
+        html.H1('Global CO2 Emission Tracker:'),
+        html.H1('Visualizing Carbon Footprints Worldwide'),
+        html.Br(),
     ]),
+
     dbc.Row([
         dbc.Col([
             dbc.Row([
@@ -39,7 +38,21 @@ app.layout=dbc.Container([
                 ),
                 html.Br(),
             ]),
-            html.Div(style={'height': '40px'}),
+            dbc.Row([
+                html.Div('Year'),
+                dcc.RangeSlider(
+                id='year-slider',
+                min=melted_df['Year'].min(),
+                max=melted_df['Year'].max(),
+                value=[1990, 2020],  # Default range
+                marks={str(year): str(year) for year in range(melted_df['Year'].min(), melted_df['Year'].max()+1, 5)},  # Mark every 5 years
+                step=1,
+                allowCross=False
+                ),
+                html.Br(),
+            ])
+        ],md=8),
+        dbc.Col([
             dbc.Row([
                 html.Div('Region'),
                 dcc.Dropdown(
@@ -49,47 +62,31 @@ app.layout=dbc.Container([
                 placeholder="Select Region(s)",
                 value=['North America']
                 ),
-                html.Br(),
-            ]),
-            html.Div(style={'height': '40px'}),
-            dbc.Row([
-                html.Div('Year'),
-                dcc.RangeSlider(
-                id='year-slider',
-                min=melted_df['Year'].min(),
-                max=melted_df['Year'].max(),
-                value=[1990, 2020],  # Default range
-                marks={str(year): str(year) for year in range(melted_df['Year'].min(), melted_df['Year'].max()+1, 10)},  # Mark every 10 years
-                step=1,
-                allowCross=False
-                ),
-                html.Br(),
-            ]),
-        ],md=2, style={'backgroundColor': '#c1dbf5', 'border': '1px solid black', 'padding': '20px'}),
-        dbc.Col([
-            dbc.Row([
-                dbc.Col([
-                    dcc.Graph(id='emissions-map-chart')
-                ],md=8, style={'border': '1px solid black'}),
-                dbc.Col([
-                    dcc.Graph(id='emissions-pie-chart')
-                ],md=4,style={'border': '1px solid black'}),
-                html.Br(),
-            ]),
+                html.Br(),   
+            ])
+        ], md=4),
+    ],style={'backgroundColor': '#c1dbf5', 'border': '1px solid black', 'padding': '20px'}),
 
-            dbc.Row([
-                dbc.Col([
-                    dcc.Graph(id='emissions-time-series')
-                ],md=8, style={'border': '1px solid black'}),
-                dbc.Col([
-                    dcc.Graph(id='emissions-bar-chart')
-                ],md=4, style={'border': '1px solid black'}),
-                html.Br(),
-            ]),
-        ]),
+    dbc.Row([
+        dbc.Col([
+            dcc.Graph(id='emissions-map-chart')
+        ],md=8, style={'border': '1px solid black'}),
+        dbc.Col([
+            dcc.Graph(id='emissions-pie-chart')
+        ],md=4,style={'border': '1px solid black'}),
+        html.Br(),
+    ]),
+
+    dbc.Row([
+        dbc.Col([
+            dcc.Graph(id='emissions-time-series')
+        ],md=8, style={'border': '1px solid black'}),
+        dbc.Col([
+            dcc.Graph(id='emissions-bar-chart')
+        ],md=4,style={'border': '1px solid black'}),
+        html.Br(),
     ]),
 ])
-
 
 ### define function for plot 
 ## line chart @ Yili Change required
