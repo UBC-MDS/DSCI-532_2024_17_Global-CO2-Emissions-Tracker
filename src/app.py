@@ -123,7 +123,7 @@ def update_bar_chart(selected_regions):
     df_top_countries = df_filtered_by_region.groupby('Country Name').agg({'Emissions':'sum'}).nlargest(5, 'Emissions').reset_index()
 
     fig = px.bar(df_top_countries, x='Country Name', y='Emissions', text='Emissions',
-                 title='Top 5 Countries\' Total CO2 Emissions in Selected Region(s)')
+                 title='Top 5 Countries\' Total CO2 Emissions<br>in Selected Region(s)')
 
     fig.update_traces(texttemplate='%{text:.2s}', textposition='outside')
 
