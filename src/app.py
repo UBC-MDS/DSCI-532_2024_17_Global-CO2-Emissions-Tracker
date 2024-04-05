@@ -15,7 +15,7 @@ melted_df['Year'] = melted_df['Year'].astype(int)  # Ensure 'Year' is an integer
 ### app layout
 app = dash.Dash(__name__)
 #### USE IT WHEN DEPLOYMENT
-# server = app.server
+server = app.server
 
 ## @ Hanchen  Change the Layout
 app.layout = html.Div([
@@ -175,7 +175,7 @@ def update_map(selected_countries, selected_years):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True, host='127.0.0.1', port=8050)
+    # app.run_server(debug=True, host='127.0.0.1', port=8050)
     
     #### CHANGE IT WHEN DEPLOYMENT
-    # app.run_server(debug=False)
+    app.run_server(debug=False)
