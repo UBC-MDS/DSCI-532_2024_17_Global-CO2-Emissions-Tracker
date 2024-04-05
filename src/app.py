@@ -2,6 +2,7 @@ import dash
 from dash import dcc, html, Input, Output
 import plotly.express as px
 import pandas as pd
+import dash_bootstrap_components as dbc
 
 # Load the dataset and Preprocessing
 # carbon_df = pd.read_csv('../data/proceed/carbon_emission_proceed.csv')
@@ -13,43 +14,80 @@ melted_df['Year'] = melted_df['Year'].astype(int)  # Ensure 'Year' is an integer
 
 
 ### app layout
-app = dash.Dash(__name__)
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 #### USE IT WHEN DEPLOYMENT
 server = app.server
 
 ## @ Hanchen  Change the Layout
-app.layout = html.Div([
-    html.H1("CO2 Emissions Dashboard"),
 
-    
-    dcc.Dropdown(
-        id='country-dropdown',
-        options=[{'label': i, 'value': i} for i in melted_df['Country Name'].unique()],
-        multi=True,  # Enable multiple selection
-        value=['United States']  # Default value
-    ),
-    
-    dcc.Dropdown(
-        id='region-dropdown',
-        options=[{'label': i, 'value': i} for i in melted_df['Region'].unique()],
-        multi=True,
-        placeholder="Select Region(s)"
-    ),
-    
-    dcc.RangeSlider(
-        id='year-slider',
-        min=melted_df['Year'].min(),
-        max=melted_df['Year'].max(),
-        value=[1990, 2020],  # Default range
-        marks={str(year): str(year) for year in range(melted_df['Year'].min(), melted_df['Year'].max()+1, 5)},  # Mark every 5 years
-        step=1,
-        allowCross=False
-    ),
+app.layout=dbc.Container([
+    dbc.Row([
+        dbc.Col([
+            html.H1('Global CO2 Emission Tracker: Visualizing Carbon Footprints Worldwide'),
+            html.Br(),
+        ]),
+    ]),
+    dbc.Row([
+        dbc.Col([
+            dbc.Row([
+                html.Div('Countruy'),
+                dcc.Dropdown(
+                id='country-dropdown',
+                options=[{'label': i, 'value': i} for i in melted_df['Country Name'].unique()],
+                multi=True,  # Enable multiple selection
+                value=['United States']  # Default value
+                ),
+                html.Br(),
+            ]),
+            html.Div(style={'height': '40px'}),
+            dbc.Row([
+                html.Div('Region'),
+                dcc.Dropdown(
+                id='region-dropdown',
+                options=[{'label': i, 'value': i} for i in melted_df['Region'].unique()],
+                multi=True,
+                placeholder="Select Region(s)",
+                value=['North America']
+                ),
+                html.Br(),
+            ]),
+            html.Div(style={'height': '40px'}),
+            dbc.Row([
+                html.Div('Year'),
+                dcc.RangeSlider(
+                id='year-slider',
+                min=melted_df['Year'].min(),
+                max=melted_df['Year'].max(),
+                value=[1990, 2020],  # Default range
+                marks={str(year): str(year) for year in range(melted_df['Year'].min(), melted_df['Year'].max()+1, 10)},  # Mark every 10 years
+                step=1,
+                allowCross=False
+                ),
+                html.Br(),
+            ]),
+        ],md=2, style={'backgroundColor': '#c1dbf5', 'border': '1px solid black', 'padding': '20px'}),
+        dbc.Col([
+            dbc.Row([
+                dbc.Col([
+                    dcc.Graph(id='emissions-map-chart')
+                ],md=8, style={'border': '1px solid black'}),
+                dbc.Col([
+                    dcc.Graph(id='emissions-pie-chart')
+                ],md=4,style={'border': '1px solid black'}),
+                html.Br(),
+            ]),
 
-    dcc.Graph(id='emissions-map-chart'),
-    dcc.Graph(id='emissions-time-series'),
-    dcc.Graph(id='emissions-bar-chart'),
-    dcc.Graph(id='emissions-pie-chart')
+            dbc.Row([
+                dbc.Col([
+                    dcc.Graph(id='emissions-time-series')
+                ],md=8, style={'border': '1px solid black'}),
+                dbc.Col([
+                    dcc.Graph(id='emissions-bar-chart')
+                ],md=4, style={'border': '1px solid black'}),
+                html.Br(),
+            ]),
+        ]),
+    ]),
 ])
 
 
