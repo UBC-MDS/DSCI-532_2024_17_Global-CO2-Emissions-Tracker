@@ -21,6 +21,8 @@ app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 ## @ Hanchen  Change the Layout
 app.layout=dbc.Container([
     dbc.Row([
+        html.Br(),
+        html.Br(),
         html.H1('Global CO2 Emission Tracker:'),
         html.H2('Visualizing Carbon Footprints Worldwide'),
         html.Br(),
@@ -31,7 +33,7 @@ app.layout=dbc.Container([
     dbc.Row([
         dbc.Col([
             dbc.Row([
-                html.Div('Select country and year to compare emission data:',
+                html.Div('Select country and year for emission data:',
                           style={'font-weight': 'bold', 'font-size': '20px'})
             ]),
             dbc.Row([
@@ -57,11 +59,11 @@ app.layout=dbc.Container([
                 ),
                 html.Br(),
             ])
-        ],md=7, style={'backgroundColor': '#c1dbf5', 'border': '1px solid black'}),
-        dbc.Col([], style={'width': '10px'}),
+        ],md=7, style={'backgroundColor': '#c1dbf5', 'border': '1px solid black', 'padding': '10px'}),
+        dbc.Col([]),
         dbc.Col([
             dbc.Row([
-                html.Div('Select region to see top emission countries within the region:',
+                html.Div('Select region for top region emitters:',
                           style={'font-weight': 'bold', 'font-size': '20px'})
             ]),
             dbc.Row([
@@ -75,14 +77,14 @@ app.layout=dbc.Container([
                 ),
                 html.Br(),   
             ])
-        ], md=4, style={'backgroundColor': '#c1dbf5', 'border': '1px solid black'}),
+        ], md=4, style={'backgroundColor': '#c1dbf5', 'border': '1px solid black','padding': '10px'}),
     ]),
 
     dbc.Row([
         dbc.Col([
             dcc.Graph(id='emissions-map-chart')
         ],md=7, style={'border': '1px solid #cccccc'}),
-        dbc.Col([], md=1),
+        dbc.Col([]),
         dbc.Col([
             dcc.Graph(id='emissions-pie-chart')
         ],md=4,style={'border': '1px solid #cccccc'}),
@@ -93,7 +95,7 @@ app.layout=dbc.Container([
         dbc.Col([
             dcc.Graph(id='emissions-time-series')
         ],md=7, style={'border': '1px solid #cccccc'}),
-        dbc.Col([], style={'width': '10px'}),
+        dbc.Col([]),
         dbc.Col([
             dcc.Graph(id='emissions-bar-chart')
         ],md=4,style={'border': '1px solid #cccccc'}),
