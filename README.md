@@ -1,6 +1,5 @@
+
 # The Global CO2 Emissions Tracker: Visualizing Carbon Footprints Worldwide
-Dashboard visualizing the Global CO2 Emissions Data.
-Deployed dashboard in {fill in later: dashboard host}: {fill in later: dashboard link}
 
 ## Dashboard Purpose: 
 The Global CO2 Emissions Tracker dashboard has created as a tool that's main goal is for raising public awareness and to help people understand global CO2 emissions better. It collects data from different countries and shows it in simple charts and graphs. This helps to see which countries emit more CO2 and how it affects the environment. By making this information easy to understand, the dashboard helps everyone, including ordinary people, leaders, and organizations, to make smarter choices. It encourages people to take action to reduce their carbon footprint and fight climate change. With its easy-to-use features, the dashboard encourages people to get involved and work together for a cleaner, greener future.
