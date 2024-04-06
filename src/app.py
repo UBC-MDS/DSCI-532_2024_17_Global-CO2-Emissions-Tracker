@@ -5,9 +5,9 @@ import pandas as pd
 import dash_bootstrap_components as dbc
 
 # Load the dataset and Preprocessing
-carbon_df = pd.read_csv('../data/proceed/carbon_emission_proceed.csv')
+# carbon_df = pd.read_csv('../data/proceed/carbon_emission_proceed.csv')
 #### CHANGE IT WHEN DEPLOYMENT
-# carbon_df = pd.read_csv('data/proceed/carbon_emission_proceed.csv')
+carbon_df = pd.read_csv('data/proceed/carbon_emission_proceed.csv')
 
 melted_df = carbon_df.drop(columns=['Country Code']).melt(id_vars=["Country Name", "Region"], var_name="Year", value_name="Emissions")
 melted_df['Year'] = melted_df['Year'].astype(int)  # Ensure 'Year' is an integer for plotting
@@ -16,7 +16,7 @@ melted_df['Year'] = melted_df['Year'].astype(int)  # Ensure 'Year' is an integer
 ### app layout
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 #### USE IT WHEN DEPLOYMENT
-# server = app.server
+server = app.server
 
 ## @ Hanchen  Change the Layout
 app.layout=dbc.Container([
