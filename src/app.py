@@ -5,31 +5,37 @@ import pandas as pd
 import dash_bootstrap_components as dbc
 
 # Load the dataset and Preprocessing
-# carbon_df = pd.read_csv('../data/proceed/carbon_emission_proceed.csv')
+carbon_df = pd.read_csv('../data/proceed/carbon_emission_proceed.csv')
 #### CHANGE IT WHEN DEPLOYMENT
-carbon_df = pd.read_csv('data/proceed/carbon_emission_proceed.csv')
+# carbon_df = pd.read_csv('data/proceed/carbon_emission_proceed.csv')
 
 melted_df = carbon_df.drop(columns=['Country Code']).melt(id_vars=["Country Name", "Region"], var_name="Year", value_name="Emissions")
 melted_df['Year'] = melted_df['Year'].astype(int)  # Ensure 'Year' is an integer for plotting
 
 
 ### app layout
-# app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 #### USE IT WHEN DEPLOYMENT
-server = app.server
+# server = app.server
 
 ## @ Hanchen  Change the Layout
 app.layout=dbc.Container([
     dbc.Row([
         html.H1('Global CO2 Emission Tracker:'),
-        html.H1('Visualizing Carbon Footprints Worldwide'),
+        html.H2('Visualizing Carbon Footprints Worldwide'),
+        html.Br(),
+        html.Br(),
         html.Br(),
     ]),
 
     dbc.Row([
         dbc.Col([
             dbc.Row([
-                html.Div('Countruy'),
+                html.Div('Select country and year to compare emission data:',
+                          style={'font-weight': 'bold', 'font-size': '20px'})
+            ]),
+            dbc.Row([
+                html.Div('Country'),
                 dcc.Dropdown(
                 id='country-dropdown',
                 options=[{'label': i, 'value': i} for i in melted_df['Country Name'].unique()],
@@ -51,8 +57,13 @@ app.layout=dbc.Container([
                 ),
                 html.Br(),
             ])
-        ],md=8),
+        ],md=7, style={'backgroundColor': '#c1dbf5', 'border': '1px solid black'}),
+        dbc.Col([], style={'width': '10px'}),
         dbc.Col([
+            dbc.Row([
+                html.Div('Select region to see top emission countries within the region:',
+                          style={'font-weight': 'bold', 'font-size': '20px'})
+            ]),
             dbc.Row([
                 html.Div('Region'),
                 dcc.Dropdown(
@@ -64,26 +75,28 @@ app.layout=dbc.Container([
                 ),
                 html.Br(),   
             ])
-        ], md=4),
-    ],style={'backgroundColor': '#c1dbf5', 'border': '1px solid black', 'padding': '20px'}),
+        ], md=4, style={'backgroundColor': '#c1dbf5', 'border': '1px solid black'}),
+    ]),
 
     dbc.Row([
         dbc.Col([
             dcc.Graph(id='emissions-map-chart')
-        ],md=8, style={'border': '1px solid black'}),
+        ],md=7, style={'border': '1px solid #cccccc'}),
+        dbc.Col([], md=1),
         dbc.Col([
             dcc.Graph(id='emissions-pie-chart')
-        ],md=4,style={'border': '1px solid black'}),
+        ],md=4,style={'border': '1px solid #cccccc'}),
         html.Br(),
     ]),
 
     dbc.Row([
         dbc.Col([
             dcc.Graph(id='emissions-time-series')
-        ],md=8, style={'border': '1px solid black'}),
+        ],md=7, style={'border': '1px solid #cccccc'}),
+        dbc.Col([], style={'width': '10px'}),
         dbc.Col([
             dcc.Graph(id='emissions-bar-chart')
-        ],md=4,style={'border': '1px solid black'}),
+        ],md=4,style={'border': '1px solid #cccccc'}),
         html.Br(),
     ]),
 ])
