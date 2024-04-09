@@ -137,10 +137,15 @@ def update_bar_chart(selected_regions):
     df_filtered_by_region = melted_df[melted_df['Region'].isin(selected_regions)]
     df_top_countries = df_filtered_by_region.groupby('Country Name').agg({'Emissions':'sum'}).nlargest(5, 'Emissions').reset_index()
 
+    max_emissions_value = df_top_countries['Emissions'].max()
+    y_axis_max = max_emissions_value * 1.2
+
     fig = px.bar(df_top_countries, x='Country Name', y='Emissions', text='Emissions',
                  title='Top 5 Countries\' Total CO2 Emissions<br>in Selected Region(s)')
 
     fig.update_traces(texttemplate='%{text:.2s}', textposition='outside')
+    fig.update_xaxes(title_text='')
+    fig.update_yaxes(range=[0, y_axis_max])
 
     return fig
 
