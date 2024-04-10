@@ -21,12 +21,12 @@ server = app.server
 ## @ Hanchen  Change the Layout
 app.layout=dbc.Container([
     dbc.Row([
+        html.H1('Global CO2 Emission Tracker:', className='text-center', style={'color': '#fff'}),
         html.Br(),
-        html.Br(),
-        html.H1('Global CO2 Emission Tracker:'),
-        html.H2('Visualizing Carbon Footprints Worldwide'),
-        html.Br(),
-        html.Br(),
+        html.H2('Visualizing Carbon Footprints Worldwide', className='text-center', style={'color': '#fff'}),
+        ], style={'backgroundColor': '#002145', 'padding': '10px'}, className='justify-content-center'),
+
+    dbc.Row([
         html.Br(),
     ]),
 
@@ -34,7 +34,7 @@ app.layout=dbc.Container([
         dbc.Col([
             dbc.Row([
                 html.Div('Select country and year for emission data:',
-                          style={'font-weight': 'bold', 'font-size': '20px'})
+                          style={'font-weight': 'bold', 'font-size': '20px', 'color': '#002145'})
             ]),
             dbc.Row([
                 html.Div('Country'),
@@ -59,12 +59,12 @@ app.layout=dbc.Container([
                 ),
                 html.Br(),
             ])
-        ],md=7, style={'backgroundColor': '#c1dbf5', 'border': '1px solid black', 'padding': '10px'}),
-        dbc.Col([]),
+        ],md=7, style={'backgroundColor': '#F4F4F4', 'padding': '20px'}),
+        dbc.Col([], md=1, style={'backgroundColor': '#F4F4F4'}),
         dbc.Col([
             dbc.Row([
                 html.Div('Select region for top region emitters:',
-                          style={'font-weight': 'bold', 'font-size': '20px'})
+                          style={'font-weight': 'bold', 'font-size': '20px', 'color': '#002145'})
             ]),
             dbc.Row([
                 html.Div('Region'),
@@ -77,28 +77,28 @@ app.layout=dbc.Container([
                 ),
                 html.Br(),   
             ])
-        ], md=4, style={'backgroundColor': '#c1dbf5', 'border': '1px solid black','padding': '10px'}),
+        ], md=4, style={'backgroundColor': '#F4F4F4', 'padding': '20px'}),
     ]),
 
     dbc.Row([
         dbc.Col([
             dcc.Graph(id='emissions-map-chart')
-        ],md=7, style={'border': '1px solid #cccccc'}),
-        dbc.Col([]),
+        ],md=7, style={}),
+        dbc.Col([], md=1),
         dbc.Col([
             dcc.Graph(id='emissions-pie-chart')
-        ],md=4,style={'border': '1px solid #cccccc'}),
+        ],md=4,style={}),
         html.Br(),
     ]),
 
     dbc.Row([
         dbc.Col([
             dcc.Graph(id='emissions-time-series')
-        ],md=7, style={'border': '1px solid #cccccc'}),
-        dbc.Col([]),
+        ],md=7, style={}),
+        dbc.Col([], md=1),
         dbc.Col([
             dcc.Graph(id='emissions-bar-chart')
-        ],md=4,style={'border': '1px solid #cccccc'}),
+        ],md=4,style={}),
         html.Br(),
     ]),
 ])
