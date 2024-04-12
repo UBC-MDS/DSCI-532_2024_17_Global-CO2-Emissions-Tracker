@@ -25,7 +25,7 @@ def create_layout(app, melted_df):
                     id='country-dropdown',
                     options=[{'label': i, 'value': i} for i in melted_df['Country Name'].unique()],
                     multi=True,  # Enable multiple selection
-                    value=['United States']  # Default value
+                    placeholder="Select Country or Countries",  # Default value
                     ),
                     html.Br(),
                 ]),
@@ -51,7 +51,7 @@ def create_layout(app, melted_df):
                         dcc.Checklist(
                             id='data-scope-check',
                             options=[{'label': 'Show all countries', 'value': 'ALL'}],
-                            value=[],
+                            value=['ALL'],
                             style={'margin': '10px'}
                         ),
                         html.Br(),
