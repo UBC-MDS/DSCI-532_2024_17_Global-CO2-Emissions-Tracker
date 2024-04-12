@@ -1,5 +1,6 @@
 import dash
 import dash_bootstrap_components as dbc
+
 from src.data import load_data
 from src.components import create_layout
 from src.callbacks import register_callbacks
