@@ -1,13 +1,13 @@
 import dash
 import dash_bootstrap_components as dbc
-from data import load_data
-from components import create_layout
-from callbacks import register_callbacks
+from src.data import load_data
+from src.components import create_layout
+from src.callbacks import register_callbacks
 
 ### app layout
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 #### USE IT WHEN DEPLOYMENT
-server = app:server
+server = app.server
 
 melted_df = load_data()
 app.layout = create_layout(app, melted_df)  
