@@ -19,37 +19,53 @@ def register_callbacks(app, melted_df):
         
         fig = px.line(df_filtered, x='Year', y='Emissions', color='Country Name',
                     title='CO2 Emissions Over Time for Selected Countries')
-        
+        fig.update_yaxes(title_text='Emissions (kt CO2)')
+
         return fig
 
 
     ## Bar Chart @ Jing
+    colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd']
+
+    def generate_color_map(df_top_countries):
+        color_discrete_map = {country: colors[i] for i, country in enumerate(df_top_countries['Country Name'])}
+        return color_discrete_map
+    
     @app.callback(
         Output('emissions-bar-chart', 'figure'),
         [Input('region-dropdown', 'value')]
     )
-
+    
     def update_bar_chart(selected_regions):
         if not selected_regions:
             return px.bar(title='Choose any Region(s): <br>For CO2 Emissions Bar Chart')
 
         df_filtered_by_region = melted_df[melted_df['Region'].isin(selected_regions)]
-        df_top_countries = df_filtered_by_region.groupby('Country Name').agg({'Emissions':'sum'}).nlargest(5, 'Emissions').reset_index()
+        df_countries = df_filtered_by_region.groupby('Country Name', as_index=False).agg({'Emissions':'sum'})
+        df_top_countries = df_countries.sort_values('Emissions', ascending=False).head(5)
+        color_discrete_map = generate_color_map(df_top_countries)
 
         max_emissions_value = df_top_countries['Emissions'].max()
         y_axis_max = max_emissions_value * 1.2
 
         fig = px.bar(df_top_countries, x='Country Name', y='Emissions', text='Emissions',
-                    title='Top 5 Countries\' Total CO2 Emissions<br>in Selected Region(s)')
-
+                 title='Top 5 Countries\' Cumulative CO2 Emissions<br>in Selected Region(s)',
+                 color='Country Name',
+                 color_discrete_map=color_discrete_map)
+        
         fig.update_traces(texttemplate='%{text:.2s}', textposition='outside')
         fig.update_xaxes(title_text='')
-        fig.update_yaxes(range=[0, y_axis_max])
+        fig.update_yaxes(title_text='Emissions (kt CO2)', range=[0, y_axis_max])
 
         return fig
 
 
     # Pie Chart @ Jo
+    def generate_color_sequence(df_top_countries):
+        colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#7f7f7f']  
+        color_sequence = [colors[i] for i in range(len(df_top_countries) + (1 if 'Others' in df_top_countries['Country Name'].values else 0))]
+        return color_sequence
+
     @app.callback(
         Output('emissions-pie-chart', 'figure'),
         [Input('region-dropdown', 'value')]
@@ -69,15 +85,16 @@ def register_callbacks(app, melted_df):
         else:
             df_display = df_top_countries
         
+        color_sequence = generate_color_sequence(df_top_countries)
         fig = px.pie(data_frame=df_display,
                     names='Country Name', 
                     values='Emissions',
                     hover_data={'Country Name': True, 'Emissions': ':.2f'}, 
                     hole=.2,
-                    title='CO2 Emissions of the Selected Region(s): <br>Top 5 Countries and Others')
+                    title='Cumulative CO2 Emission: <br>Top 5 Countries and Others of Selected Region(s)')
         
-        fig.update_traces(hovertemplate='%{label}: <br>Percentage: %{percent} <br>CO2 Emission: %{value} MT/capita<br>', textposition='outside')
-
+        fig.update_traces(hovertemplate='%{label}: <br>Percentage: %{percent} <br>CO2 Emission: %{value} MT/capita<br>', textposition='outside',
+                      marker=dict(colors=color_sequence))
         return fig
 
     ## Map Chart @ Yili
@@ -125,8 +142,9 @@ def register_callbacks(app, melted_df):
                 'Max_Emissions': ':.2f',
                 'Min_Emissions': ':.2f'
             },
-            color_continuous_scale=px.colors.qualitative.Dark24,
-            title="CO2 Emissions by Country"
+            color_continuous_scale=px.colors.sequential.Teal,
+            title="CO2 Emissions by Country",
+            labels={'Total_Emissions': 'Total Emissions (kt CO2)'}
         )
 
         fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
