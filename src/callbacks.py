@@ -130,7 +130,7 @@ def register_callbacks(app, cache, melted_df):
                     values='Emissions',
                     hover_data={'Country Name': True, 'Emissions': ':.2f'}, 
                     hole=.2,
-                    title='Cumulative CO2 Emission: <br>Top 5 Countries and Others of Selected Region(s)')
+                    title='Cumulative CO2 Emission: <br>Top 5 Countries and Others')
         
         fig.update_traces(hovertemplate='%{label}: <br>Percentage: %{percent} <br>CO2 Emission: %{value} MT/capita<br>', textposition='outside',
                       marker=dict(colors=color_sequence))
