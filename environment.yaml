@@ -15,5 +15,6 @@ dependencies:
     - dash-bootstrap-components
     - plotly
     - pip
+    - flask-caching
 pip:
     - dash-vega-components
