@@ -6,3 +6,4 @@ altair==5.3.*
 pandas==2.2.*
 dash-leaflet==1.0.*
 plotly==5.20.0
+flask-caching==1.10.*

@@ -1,5 +1,6 @@
 import dash
 import dash_bootstrap_components as dbc
+from flask_caching import Cache 
 
 #### USE IT WHEN DEPLOYMENT
 # from src.data import load_data
@@ -12,6 +13,10 @@ from callbacks import register_callbacks
 
 ### app layout
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+cache = Cache(app.server, config={
+    'CACHE_TYPE': 'filesystem',  
+    'CACHE_DIR': 'cache-directory', 
+})
 #### USE IT WHEN DEPLOYMENT
 # server = app.server
 
