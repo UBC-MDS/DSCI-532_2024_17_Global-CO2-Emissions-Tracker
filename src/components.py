@@ -46,17 +46,7 @@ def create_layout(app, melted_df):
                     ),
                     html.Br(),
                 ]),
-                dbc.Row([
-                    dbc.Col([
-                        dcc.Checklist(
-                            id='data-scope-check',
-                            options=[{'label': 'Show all countries', 'value': 'ALL'}],
-                            value=['ALL'],
-                            style={'margin': '10px'}
-                        ),
-                        html.Br(),
-                    ], md=12)
-                ])
+
             ], md=7, style={'backgroundColor': '#F4F4F4', 'padding': '20px'}),
             dbc.Col([], md=1, style={'backgroundColor': '#F4F4F4'}),
             dbc.Col([

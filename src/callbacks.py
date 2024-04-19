@@ -1,27 +1,51 @@
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 import plotly.express as px
 import pandas as pd
+import dash
+from dash.exceptions import PreventUpdate
 
 def register_callbacks(app, melted_df):
-    ### define function for plot 
     @app.callback(
-        Output('emissions-time-series', 'figure'),
-        [Input('country-dropdown', 'value'), Input('year-slider', 'value')]
+        [Output('country-dropdown', 'value'),
+        Output('emissions-time-series', 'figure')],
+        [Input('emissions-map-chart', 'clickData'),
+        Input('country-dropdown', 'value'),
+        Input('year-slider', 'value')]
     )
+    def line_from_map_click(clickData, selected_countries, selected_years):
+        ctx = dash.callback_context
+        if not ctx.triggered:
+            return dash.no_update
+        input_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
-    def update_graph(selected_countries, selected_years):
+        if selected_countries is None:
+            selected_countries = []
+
+        if input_id == 'emissions-map-chart' and clickData:
+            country_name = clickData['points'][0]['location']
+
+            if country_name not in selected_countries:
+                selected_countries.append(country_name)
+            else:
+
+                selected_countries.remove(country_name)
+        
+
         if not selected_countries or not selected_years:
-            return px.line(title='Select countries and year range to see CO2 Emissions Over Time')
+            return [selected_countries, px.line(title='Select countries and year range to see CO2 Emissions Over Time')]
         
-        df_filtered = melted_df[(melted_df['Country Name'].isin(selected_countries)) & 
-                                (melted_df['Year'] >= selected_years[0]) & 
-                                (melted_df['Year'] <= selected_years[1])]
-        
-        fig = px.line(df_filtered, x='Year', y='Emissions', color='Country Name',
-                    title='CO2 Emissions Over Time for Selected Countries')
-        fig.update_yaxes(title_text='Emissions (kt CO2)')
+        df_filtered = melted_df[
+            (melted_df['Country Name'].isin(selected_countries)) & 
+            (melted_df['Year'] >= selected_years[0]) & 
+            (melted_df['Year'] <= selected_years[1])
+        ]
 
-        return fig
+        line_fig = px.line(df_filtered, x='Year', y='Emissions', color='Country Name',
+                        title='CO2 Emissions Over Time for Selected Countries')
+        line_fig.update_yaxes(title_text='Emissions (kt CO2)')
+
+        return [selected_countries, line_fig]
+
 
 
     ## Bar Chart @ Jing
@@ -97,28 +121,25 @@ def register_callbacks(app, melted_df):
                       marker=dict(colors=color_sequence))
         return fig
 
-    ## Map Chart @ Yili
+    # Map Chart @ Yili
     @app.callback(
         Output('emissions-map-chart', 'figure'),
-        [Input('country-dropdown', 'value'), Input('year-slider', 'value'), Input('data-scope-check', 'value')]
+        [Input('country-dropdown', 'value'), Input('year-slider', 'value')]
     )
 
-    def update_map(selected_countries, selected_years, scope):
-        if 'ALL' in scope:
-            df_filtered = melted_df[
-                (melted_df['Year'] >= selected_years[0]) &
-                (melted_df['Year'] <= selected_years[1])
-            ]
-        elif not selected_countries or not selected_years:
-            
-            return px.choropleth(title="Select countries and year range to see the map")
-        else:
+    def update_map(selected_countries, selected_years):
+        if selected_countries:
             df_filtered = melted_df[
                 (melted_df['Country Name'].isin(selected_countries)) &
                 (melted_df['Year'] >= selected_years[0]) &
                 (melted_df['Year'] <= selected_years[1])
             ]
-    
+        else:
+            df_filtered = melted_df[
+                (melted_df['Year'] >= selected_years[0]) &
+                (melted_df['Year'] <= selected_years[1])
+            ]
+        
         # Calculate summary statistics for each country
         stats_by_country = df_filtered.groupby('Country Name').agg(
             Total_Emissions=pd.NamedAgg(column='Emissions', aggfunc='sum'),
@@ -147,8 +168,9 @@ def register_callbacks(app, melted_df):
             labels={'Total_Emissions': 'Total Emissions (kt CO2)'}
         )
 
-        fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+        fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0}, clickmode='event+select' )
         fig.update_geos(projection_type="natural earth")
 
         return fig
 
+    
