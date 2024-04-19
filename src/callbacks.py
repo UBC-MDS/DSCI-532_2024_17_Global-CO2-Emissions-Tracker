@@ -179,7 +179,7 @@ def register_callbacks(app, cache, melted_df):
                 'Min_Emissions': ':.2f'
             },
             color_continuous_scale=px.colors.sequential.Teal,
-            title="CO2 Emissions by Country",
+            # title="CO2 Emissions by Country",
             labels={'Total_Emissions': 'Total Emissions (kt CO2)'}
         )
 
