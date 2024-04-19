@@ -15,14 +15,14 @@ from callbacks import register_callbacks
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 cache = Cache(app.server, config={
     'CACHE_TYPE': 'filesystem',  
-    'CACHE_DIR': 'cache-directory', 
+    'CACHE_DIR': 'cache-directory'
 })
 #### USE IT WHEN DEPLOYMENT
 # server = app.server
 
-melted_df = load_data()
+melted_df = load_data(cache)
 app.layout = create_layout(app, melted_df)  
-register_callbacks(app, melted_df)  
+register_callbacks(app, cache, melted_df) 
 
 
 

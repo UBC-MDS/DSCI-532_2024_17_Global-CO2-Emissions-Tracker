@@ -5,7 +5,14 @@ import dash
 from dash.exceptions import PreventUpdate
 
 
-def register_callbacks(app, melted_df):
+def register_callbacks(app, cache, melted_df):
+    @cache.memoize(timeout=300) 
+    def get_filtered_data(melted_df, selected_countries, selected_years):
+        return melted_df[
+            (melted_df['Country Name'].isin(selected_countries)) &
+            (melted_df['Year'] >= selected_years[0]) &
+            (melted_df['Year'] <= selected_years[1])
+        ]
     @app.callback(
         [Output('country-dropdown', 'value'),
          Output('emissions-time-series', 'figure')],
@@ -48,11 +55,7 @@ def register_callbacks(app, melted_df):
                 selected_countries.remove(country_name)
 
         # Proceed with filtering data and creating the line chart
-        df_filtered = melted_df[
-            (melted_df['Country Name'].isin(selected_countries)) &
-            (melted_df['Year'] >= selected_years[0]) &
-            (melted_df['Year'] <= selected_years[1])
-        ]
+        df_filtered = get_filtered_data(melted_df, selected_countries, selected_years)
 
         line_fig = px.line(df_filtered, x='Year', y='Emissions', color='Country Name',
                            title='CO2 Emissions Over Time for Selected Countries')
