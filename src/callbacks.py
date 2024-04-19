@@ -4,18 +4,37 @@ import pandas as pd
 import dash
 from dash.exceptions import PreventUpdate
 
+
 def register_callbacks(app, melted_df):
     @app.callback(
         [Output('country-dropdown', 'value'),
-        Output('emissions-time-series', 'figure')],
+         Output('emissions-time-series', 'figure')],
         [Input('emissions-map-chart', 'clickData'),
-        Input('country-dropdown', 'value'),
-        Input('year-slider', 'value')]
+         Input('country-dropdown', 'value'),
+         Input('year-slider', 'value')]
     )
     def line_from_map_click(clickData, selected_countries, selected_years):
         ctx = dash.callback_context
         if not ctx.triggered:
-            return dash.no_update
+            placeholder_figure = {
+                'data': [],
+                'layout': {
+                    'xaxis': {'visible': False},
+                    'yaxis': {'visible': False},
+                    'annotations': [{
+                        'text': 'Please select a country to visualize the carbon emission line chart',
+                        'xref': 'paper',
+                        'yref': 'paper',
+                        'showarrow': False,
+                        'font': {
+                            'size': 16
+                        },
+                        'align': 'center'
+                    }]
+                }
+            }
+            return [selected_countries, placeholder_figure]
+        
         input_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
         if selected_countries is None:
@@ -23,29 +42,22 @@ def register_callbacks(app, melted_df):
 
         if input_id == 'emissions-map-chart' and clickData:
             country_name = clickData['points'][0]['location']
-
             if country_name not in selected_countries:
                 selected_countries.append(country_name)
             else:
-
                 selected_countries.remove(country_name)
-        
 
-        if not selected_countries or not selected_years:
-            return [selected_countries, px.line(title='Select countries and year range to see CO2 Emissions Over Time')]
-        
+        # Proceed with filtering data and creating the line chart
         df_filtered = melted_df[
-            (melted_df['Country Name'].isin(selected_countries)) & 
-            (melted_df['Year'] >= selected_years[0]) & 
+            (melted_df['Country Name'].isin(selected_countries)) &
+            (melted_df['Year'] >= selected_years[0]) &
             (melted_df['Year'] <= selected_years[1])
         ]
 
         line_fig = px.line(df_filtered, x='Year', y='Emissions', color='Country Name',
-                        title='CO2 Emissions Over Time for Selected Countries')
+                           title='CO2 Emissions Over Time for Selected Countries')
         line_fig.update_yaxes(title_text='Emissions (kt CO2)')
-
         return [selected_countries, line_fig]
-
 
 
     ## Bar Chart @ Jing
