@@ -89,4 +89,16 @@ def create_layout(app, melted_df):
             ],md=4,style={}),
             html.Br(),
         ]),
-    ])
+
+        dbc.Row(
+            dbc.Col(
+                html.Footer([
+                    html.P("Global CO2 Emission Tracker - A comprehensive tool to visualize CO2 emissions globally."),
+                    html.P("Author: Yili Tang, Jing Wen, Hancheng Qin, Kittipong Wongwipasamitkun"),
+                    html.P(["Visit the project repository: ", html.A("GitHub Repo", href="https://github.com/UBC-MDS/DSCI-532_2024_17_Global-CO2-Emissions-Tracker", target="_blank")]),
+                    html.P("Last updated: April 20, 2024.")
+                ], style={'backgroundColor': '#002145', 'color': 'white', 'textAlign': 'center', 'padding': '20px'}),
+                width=12  
+            ),
+        )
+    ], fluid=True)
